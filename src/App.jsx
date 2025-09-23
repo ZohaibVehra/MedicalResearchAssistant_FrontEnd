@@ -8,6 +8,8 @@ import loginService from '../services/login'
 import PriorSearchesDisplay from "../components/PriorSearches"
 import AIToggle from '../components/AIToggle'
 import aiService from '../services/ai'
+import PageBackground from "../components/PageBackground"
+import TopBar from "../components/TopBar"
 
 function App() {
   const [errorMessage, setErrorMessage] = useState(null)
@@ -118,6 +120,8 @@ function App() {
 
   return (
     <>
+    <PageBackground />
+    <TopBar />
       <div className='p-4 space-y-4'>
         <AIToggle
           buttonLabel='ai assistant'
@@ -126,8 +130,7 @@ function App() {
         />
         {results && <div className='mt-4'>render results here</div>}
       </div>
-      <h1>hi</h1>
-      {results ? <h5>{results.latest[0].title}</h5> : <h5>nothing</h5>}
+      {results ? <h5>{results.latest[0].title}</h5> : <h5></h5>}
       <Notification message={errorMessage} />
       <div className="sideBar">
         {!user &&  loginForm()}
