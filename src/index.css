@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+:root { --vh: 1vh; }
+
+/* Utility: 100 * dynamic vh */
+.vh-100 { height: calc(var(--vh, 1vh) * 100); }
+
+/* Optional: use as min-height if you prefer */
+.min-vh-100 { min-height: calc(var(--vh, 1vh) * 100); }

@@ -245,7 +245,7 @@ function App() {
           setAiResponse={setAiResponse}
         />
     )}
-      <div className={`pt-20 md:pt-24 xl:pt-26 ${user ? 'lg:pl-80' : ''}`}> 
+      <div className={`pt-20 md:pt-24 xl:pt-26 ${user ? 'lg:pl-80' : ''} min-h-dvh overflow-x-hidden`}>
         {showRegister && <RegistrationForm hideRegister={() => setShowRegister(false)} registerUser={handleRegister}/>}
         {showLogin && <LoginForm hideLogin={() => setShowLogin(false)} loginUser={handleLogin} />}
         

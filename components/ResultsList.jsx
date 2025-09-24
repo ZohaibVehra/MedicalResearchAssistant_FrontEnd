@@ -29,9 +29,9 @@ const ResultsList = ({ title = '', items = [], pageSize = 5, showEmpty = false }
   if (!total && showEmpty) {
     return (
       <div className="w-[80%] md:w-[80%] mx-auto mt-6">
-        {title && <h3 className="text-white/90 font-semibold mb-3">{title}</h3>}
+        {title && <h3 className="text-white/90 font-semibold mb-3 text-base md:text-lg">{title}</h3>}
         <div className="rounded-2xl bg-white/6 backdrop-blur border border-white/10 p-4">
-          <p className="text-neutral-300 text-sm">No results</p>
+          <p className="text-neutral-300 text-xs md:text-sm">No results</p>
         </div>
       </div>
     )
@@ -59,7 +59,7 @@ const ResultsList = ({ title = '', items = [], pageSize = 5, showEmpty = false }
       {/* header row */}
       {(title || total) && (
         <div className="mb-3 flex items-center justify-between">
-          {title && <h3 className="text-white/90 font-semibold">{title}</h3>}
+          {title && <h3 className="text-white/90 font-semibold text-base md:text-lg">{title}</h3>}
 
           <div className="flex items-center gap-2">
             <span className="text-neutral-400 text-xs md:text-sm mr-1">
@@ -118,32 +118,32 @@ const ResultsList = ({ title = '', items = [], pageSize = 5, showEmpty = false }
                   href={url}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-white text-lg md:text-xl font-semibold leading-snug hover:underline"
+                  className="text-white text-base md:text-lg font-semibold leading-snug hover:underline"
                   title="Open via DOI"
                 >
                   {it.title || 'Untitled'}
                 </a>
               ) : (
-                <div className="text-white text-lg md:text-xl font-semibold leading-snug">
+                <div className="text-white text-base md:text-lg font-semibold leading-snug">
                   {it.title || 'Untitled'}
                 </div>
               )}
 
-              <div className="mt-1 text-neutral-300 text-sm md:text-base">
+              <div className="mt-1 text-neutral-300 text-xs md:text-sm">
                 {authors}
               </div>
 
-              <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
+              <div className="mt-2 flex flex-wrap items-center gap-3 text-xs md:text-sm">
                 <span className="text-neutral-400">Published: {when}</span>
                 <span className="text-neutral-400">Citations: {cites}</span>
                 {isFree && (
-                  <span className="rounded-md px-2 py-0.5 text-xs bg-emerald-400/15 text-emerald-200 border border-emerald-400/30">
+                  <span className="rounded-md px-2 py-0.5 text-[10px] md:text-xs bg-emerald-400/15 text-emerald-200 border border-emerald-400/30">
                     free
                   </span>
                 )}
               </div>
 
-              <div className="mt-2 text-sm">
+              <div className="mt-2 text-xs md:text-sm">
                 {url ? (
                   <a
                     href={url}

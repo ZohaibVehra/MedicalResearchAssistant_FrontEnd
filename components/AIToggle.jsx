@@ -87,15 +87,20 @@ const AIToggle = ({ aiMode, setAiMode, aiError, buttonLabel = 'AI assistant', ha
             <input
               value={refineText}
               onChange={e => setRefineText(e.target.value)}
-              className="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-white placeholder-neutral-300 focus:outline-none focus:ring-2 focus:ring-white/30"
+              className="w-full rounded-xl bg-white/5 border border-white/10 
+                        px-2 py-1.5 text-sm md:px-3 md:py-2 md:text-base 
+                        text-white placeholder:text-xs md:placeholder:text-sm 
+                        placeholder-neutral-300 focus:outline-none focus:ring-2 focus:ring-white/30"
               placeholder="e.g glioblastoma chemo resistance"
             />
             <div className="pt-1">
               <button
                 type="submit"
                 disabled={submitting}
-                className="rounded-xl px-4 py-2 font-medium bg-white text-neutral-900 hover:bg-neutral-200 disabled:opacity-60 disabled:cursor-not-allowed"
-              >
+                className="rounded-xl px-3 py-1.5 text-sm md:px-4 md:py-2 md:text-base 
+                  font-medium bg-white text-neutral-900 
+                  hover:bg-neutral-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
                 {submitting ? 'Refining…' : 'Refine search'}
               </button>
             </div>
@@ -108,14 +113,19 @@ const AIToggle = ({ aiMode, setAiMode, aiError, buttonLabel = 'AI assistant', ha
             <input
               value={generateText}
               onChange={e => setGenerateText(e.target.value)}
-              className="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-white placeholder-neutral-300 focus:outline-none focus:ring-2 focus:ring-white/30"
+              className="w-full rounded-xl bg-white/5 border border-white/10 
+                        px-2 py-1.5 text-sm md:px-3 md:py-2 md:text-base 
+                        text-white placeholder:text-xs md:placeholder:text-sm 
+                        placeholder-neutral-300 focus:outline-none focus:ring-2 focus:ring-white/30"
               placeholder="e.g biomarkers for early Alzheimer’s"
             />
             <div className="pt-1">
               <button
                 type="submit"
                 disabled={submitting}
-                className="rounded-xl px-4 py-2 font-medium bg-white text-neutral-900 hover:bg-neutral-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                className="rounded-xl px-3 py-1.5 text-sm md:px-4 md:py-2 md:text-base 
+                  font-medium bg-white text-neutral-900 
+                  hover:bg-neutral-200 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {submitting ? 'Generating…' : 'Generate searches'}
               </button>
