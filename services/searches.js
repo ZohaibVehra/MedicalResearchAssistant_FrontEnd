@@ -7,6 +7,14 @@ const setToken = newToken => {
   token = `Bearer ${newToken}`
 }
 
+const getById = async (id) => {
+  const config = {
+    headers: { Authorization: token }
+  }
+  const response = await axios.get(`${baseUrl}/${id}`, config)
+  return response.data
+}
+
 const create = async queryObject => {
   const config = {
     headers: { Authorization: token }
@@ -31,4 +39,4 @@ const deleteSearch = async id => {
   return response.data
 }
 
-export default { setToken, create, findMine, deleteSearch }
+export default { setToken, create, findMine, deleteSearch, getById }

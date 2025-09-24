@@ -1,100 +1,130 @@
 import { useState } from 'react'
-import { Menu } from '@headlessui/react'
 
-const AITogglable = ({ buttonLabel = 'ai assistant', handleRefinement, handleGenerate }) => {
+const AIToggle = ({ aiMode, setAiMode, aiError, buttonLabel = 'AI assistant', handleRefinement, handleGenerate }) => {
   const [refineText, setRefineText] = useState('')
   const [generateText, setGenerateText] = useState('')
-  const [aiType, setAiType] = useState('closed') // 'closed' | 'refine' | 'generate'
+  const [submitting, setSubmitting] = useState(false)
 
-  const refineCall = e => {
+  const onRefine = async e => {
     e.preventDefault()
-    if (!refineText.trim()) return
-    handleRefinement({ query: refineText.trim() })
+    const q = refineText.trim()
+    if (!q) return
+    setSubmitting(true)
+    await handleRefinement({ query: q })
+    setSubmitting(false)
     setRefineText('')
   }
 
-  const generateCall = e => {
+  const onGenerate = async e => {
     e.preventDefault()
-    if (!generateText.trim()) return
-    handleGenerate({ topic: generateText.trim() })
+    const t = generateText.trim()
+    if (!t) return
+    setSubmitting(true)
+    await handleGenerate({ topic: t })
+    setSubmitting(false)
     setGenerateText('')
   }
 
+  if (aiMode === 'closed') {
+    return (
+      <div className="w-[80%] md:w-[80%] mx-auto">
+        <button
+          onClick={() => setAiMode('refine')}
+          className="rounded-xl px-4 py-2 font-medium bg-white/10 text-white hover:bg-white/20 border border-white/10"
+        >
+          {buttonLabel}
+        </button>
+      </div>
+    )
+  }
+
   return (
-    <div>
-      {aiType === 'closed' && (
-        <Menu as='div' className='relative inline-block'>
-          <Menu.Button className='rounded border px-3 py-2 hover:bg-gray-50'>
-            {buttonLabel} ▾
-          </Menu.Button>
-          <Menu.Items className='absolute left-0 mt-2 w-56 rounded-xl border bg-white p-2 shadow'>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={() => setAiType('refine')}
-                  className={`w-full rounded-lg px-3 py-2 text-left ${active ? 'bg-gray-100' : ''}`}
-                >
-                  search refinement
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={() => setAiType('generate')}
-                  className={`mt-1 w-full rounded-lg px-3 py-2 text-left ${active ? 'bg-gray-100' : ''}`}
-                >
-                  generate search text
-                </button>
-              )}
-            </Menu.Item>
-          </Menu.Items>
-        </Menu>
-      )}
+    <div className="w-[80%] md:w-[80%] mx-auto">
+      <div className="mt-3 rounded-2xl bg-white/6 backdrop-blur border border-white/10 p-4">
+        
+        {/* Error message */}
+        {aiError && (
+          <p className="pl-3 text-red-400 text-sm md:text-base font-medium mb-1">
+            {aiError}
+          </p>
+        )}
 
-      {aiType !== 'closed' && (
-        <div className='mt-3'>
-          {aiType === 'refine' && (
-            <form onSubmit={refineCall} className='space-y-2'>
-              <label className='block font-medium'>enter your current query</label>
-              <input
-                value={refineText}
-                onChange={e => setRefineText(e.target.value)}
-                className='w-[360px] max-w-full rounded border px-3 py-2'
-                placeholder='e.g. glioblastoma chemo resistance'
-              />
-              <div>
-                <button type='submit' className='rounded bg-black px-3 py-2 text-white'>
-                  refine search
-                </button>
-              </div>
-            </form>
-          )}
+        {/* Tabs */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setAiMode('refine')}
+            className={`rounded-lg px-3 py-1.5 text-sm font-medium border ${
+              aiMode === 'refine'
+                ? 'bg-white text-neutral-900 border-white/20'
+                : 'bg-white/5 text-white border-white/10 hover:bg-white/10'
+            }`}
+          >
+            Search refinement
+          </button>
+          <button
+            onClick={() => setAiMode('generate')}
+            className={`rounded-lg px-3 py-1.5 text-sm font-medium border ${
+              aiMode === 'generate'
+                ? 'bg-white text-neutral-900 border-white/20'
+                : 'bg-white/5 text-white border-white/10 hover:bg-white/10'
+            }`}
+          >
+            Generate search text
+          </button>
 
-          {aiType === 'generate' && (
-            <form onSubmit={generateCall} className='space-y-2'>
-              <label className='block font-medium'>describe what you need</label>
-              <input
-                value={generateText}
-                onChange={e => setGenerateText(e.target.value)}
-                className='w-[360px] max-w-full rounded border px-3 py-2'
-                placeholder='e.g. biomarkers for early alzheimer’s'
-              />
-              <div>
-                <button type='submit' className='rounded bg-black px-3 py-2 text-white'>
-                  generate searches
-                </button>
-              </div>
-            </form>
-          )}
-
-          <button onClick={() => setAiType('closed')} className='mt-3 rounded border px-3 py-2'>
-            close ai assistant
+          <div className="flex-1" />
+          <button
+            onClick={() => setAiMode('closed')}
+            className="rounded-lg px-3 py-1.5 text-sm font-medium bg-white/5 text-white border border-white/10 hover:bg-white/10"
+          >
+            ✕
           </button>
         </div>
-      )}
+
+        {aiMode === 'refine' && (
+          <form onSubmit={onRefine} className="mt-4 space-y-2">
+            <label className="block text-sm text-neutral-300">Enter your current query</label>
+            <input
+              value={refineText}
+              onChange={e => setRefineText(e.target.value)}
+              className="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-white placeholder-neutral-300 focus:outline-none focus:ring-2 focus:ring-white/30"
+              placeholder="e.g glioblastoma chemo resistance"
+            />
+            <div className="pt-1">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="rounded-xl px-4 py-2 font-medium bg-white text-neutral-900 hover:bg-neutral-200 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {submitting ? 'Refining…' : 'Refine search'}
+              </button>
+            </div>
+          </form>
+        )}
+
+        {aiMode === 'generate' && (
+          <form onSubmit={onGenerate} className="mt-4 space-y-2">
+            <label className="block text-sm text-neutral-300">Describe what you need</label>
+            <input
+              value={generateText}
+              onChange={e => setGenerateText(e.target.value)}
+              className="w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 text-white placeholder-neutral-300 focus:outline-none focus:ring-2 focus:ring-white/30"
+              placeholder="e.g biomarkers for early Alzheimer’s"
+            />
+            <div className="pt-1">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="rounded-xl px-4 py-2 font-medium bg-white text-neutral-900 hover:bg-neutral-200 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {submitting ? 'Generating…' : 'Generate searches'}
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
     </div>
   )
 }
 
-export default AITogglable
+export default AIToggle
