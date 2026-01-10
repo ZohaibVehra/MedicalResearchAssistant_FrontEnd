@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const ResultsList = ({ title = '', items = [], pageSize = 5, showEmpty = false }) => {
+const ResultsList = ({ items = [], pageSize = 5, showEmpty = false }) => {
   const [page, setPage] = useState(0)
 
   useEffect(() => {
@@ -29,7 +29,6 @@ const ResultsList = ({ title = '', items = [], pageSize = 5, showEmpty = false }
   if (!total && showEmpty) {
     return (
       <div className="w-[80%] md:w-[80%] mx-auto mt-6">
-        {title && <h3 className="text-white/90 font-semibold mb-3 text-base md:text-lg">{title}</h3>}
         <div className="rounded-2xl bg-white/6 backdrop-blur border border-white/10 p-4">
           <p className="text-neutral-300 text-xs md:text-sm">No results</p>
         </div>
@@ -57,10 +56,8 @@ const ResultsList = ({ title = '', items = [], pageSize = 5, showEmpty = false }
   return (
     <div className="w-[80%] md:w-[80%] mx-auto mt-6">
       {/* header row */}
-      {(title || total) && (
+      {(total) && (
         <div className="mb-3 flex items-center justify-between">
-          {title && <h3 className="text-white/90 font-semibold text-base md:text-lg">{title}</h3>}
-
           <div className="flex items-center gap-2">
             <span className="text-neutral-400 text-xs md:text-sm mr-1">
               {start + 1}–{end} of {total}
@@ -76,7 +73,7 @@ const ResultsList = ({ title = '', items = [], pageSize = 5, showEmpty = false }
                          hover:bg-white/20 disabled:opacity-40 disabled:cursor-not-allowed"
               title={canPrev ? 'Previous' : 'At start'}
             >
-              {/* chevron left */}
+              {/* arrow left */}
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className="h-4 w-4" fill="currentColor">
                 <path fillRule="evenodd" d="M12.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L8.414 10l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
               </svg>
@@ -90,7 +87,7 @@ const ResultsList = ({ title = '', items = [], pageSize = 5, showEmpty = false }
               className="rounded-full h-8 w-8 flex items-center justify-center bg-white/10 text-white border border-white/10 hover:bg-white/20 disabled:opacity-40 disabled:cursor-not-allowed"
               title={canNext ? 'Next' : 'No more results'}
             >
-              {/* chevron right */}
+              {/* arrow right */}
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className="h-4 w-4" fill="currentColor">
                 <path fillRule="evenodd" d="M7.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L11.586 10 7.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
