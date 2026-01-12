@@ -3,7 +3,7 @@ import logo from '../src/assets/logo.png'
 const TopBar = ({ user, onLoginClick, onLogoutClick, onMobileSidebarToggle, registerToggle }) => {
   return (
     <header className="fixed top-0 inset-x-0 z-20 bg-black/65 backdrop-blur border-b border-white/10 text-white">
-      {/* full-bleed row with responsive height and gutters */}
+      
       <div className="h-14 md:h-16 xl:h-20 px-4 md:px-6 xl:px-10 flex items-center">
         {user && (
           <button
