@@ -60,7 +60,7 @@ function App() {
       ? resultView === 'latest'
         ? results.latest
         : resultView === 'mostCited'
-          ? (results.mostCited ?? results.mostcited)
+          ? results.mostCited
           : results.relevant
       : []
 
